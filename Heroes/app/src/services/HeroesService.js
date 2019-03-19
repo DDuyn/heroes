@@ -6,5 +6,8 @@ export default {
   },
   addHero (hero) {
     return Api().post('hero', hero)
+  },
+  updateHero (hero) {
+    return Api().put('hero', hero)
   }
 }
