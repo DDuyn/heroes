@@ -1,12 +1,30 @@
 <template>
-    <div class="heroes">
+    <div class="heroes row">
         <h1>Heroes</h1>
-        This file will list heroes
+        <div class="col-md-12" v-for="hero in heroes" :key="hero._id">
+            <div class="col-md-12"> <h3><small class="text-muted"> {{ hero.Name }} </small> </h3> </div>
+            <hr />
+            <div class="container-fluid">
+                <dl class="row">
+                    <ddt class="col-sm-3">Owner</ddt>
+                    <dd class="col-sm-9"> {{ hero.Owner }} </dd>
+                    
+                    <ddt class="col-sm-3">Class</ddt>
+                    <dd class="col-sm-9"> {{ hero.Class }} </dd>
 
-        <div v-for="heroe in heroes" :key="heroe._id">
-            <p>
-                <span><b>{{ heroe.Name }}</b></span>
-            </p>
+                    <ddt class="col-sm-3">Level</ddt>
+                    <dd class="col-sm-9"> {{ hero.Level }} </dd>
+
+                    <ddt class="col-sm-3">Total Experience</ddt>
+                    <dd class="col-sm-9"> {{ hero.TotalExperience }} </dd>
+
+                    <ddt class="col-sm-3">Experience Needed</ddt>
+                    <dd class="col-sm-9"> {{ hero.ExperienceNeeded }} </dd>
+
+                    <button type="button" class="btn btn-outline-success btn-sm" @click="addExperience(hero)">GainExperience</button>
+
+                </dl>
+            </div>
         </div>
     </div>
 </template>
@@ -28,6 +46,18 @@ import HeroesService from '@/services/HeroesService'
                 const response = await HeroesService.fetchHeroes()
                 console.log(response.data.heroes)
                 this.heroes = response.data.heroes
+            },
+            async addExperience (hero) {
+            
+               hero.TotalExperience += 50
+
+               if (hero.TotalExperience >= hero.ExperienceNeeded) {
+                   
+                   hero.Level++
+                   hero.ExperienceNeeded = Math.round((((hero.ExperienceNeeded * 20) / 100) + hero.ExperienceNeeded) * 2)
+                   hero.GainedExperience = 0
+               }
+               const response = await HeroesService.addExperience({hero})
             }
         }
     }

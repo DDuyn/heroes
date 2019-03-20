@@ -8,7 +8,6 @@ var HeroSchema = new Schema({
   Level: Number,
   TotalExperience: Number,
   ExperienceNeeded: Number,
-  GainedExperience: Number,
   IsDead: Boolean
 })
 

@@ -7,7 +7,7 @@ export default {
   addHero (hero) {
     return Api().post('hero', hero)
   },
-  updateHero (hero) {
+  addExperience (hero) {
     return Api().put('hero', hero)
   }
 }

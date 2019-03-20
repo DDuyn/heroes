@@ -2,7 +2,7 @@ var Heroe = require('../models/Hero')
 
 module.exports = {
   async get (req, res) {
-    Heroe.find({}, 'Name', function (error, heroes) {
+    Heroe.find({}, function (error, heroes) {
       if (error) console.error(error)
       res.send({
         heroes: heroes
@@ -29,5 +29,18 @@ module.exports = {
         message: 'Heroe saved successfully'
       })
     })
+  },
+
+  async addExperience (req, res) {
+    console.log(req.body.hero)
+
+    Heroe.findOneAndUpdate(
+      { Name: req.body.hero.Name },
+      {$set: {TotalExperience: req.body.hero.TotalExperience, GainedExperience: req.body.hero.GainedExperience, ExperienceNeeded: req.body.hero.ExperienceNeeded, Level: req.body.hero.Level}},
+      {new: true},
+      function (error, hero) {
+        if (error) console.error(error)
+        res.send({hero})
+      })
   }
 }
