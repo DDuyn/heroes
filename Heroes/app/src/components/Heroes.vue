@@ -31,6 +31,8 @@
 
 <script>
 import HeroesService from '@/services/HeroesService'
+import Common from '@/common/common'
+
     export default {
         name: 'heroes',
         data() {
@@ -48,15 +50,7 @@ import HeroesService from '@/services/HeroesService'
                 this.heroes = response.data.heroes
             },
             async addExperience (hero) {
-            
-               hero.TotalExperience += 50
-
-               if (hero.TotalExperience >= hero.ExperienceNeeded) {
-                   
-                   hero.Level++
-                   hero.ExperienceNeeded = Math.round((((hero.ExperienceNeeded * 20) / 100) + hero.ExperienceNeeded) * 2)
-                   hero.GainedExperience = 0
-               }
+               hero = await Common.GainExperience(hero, 50)
                const response = await HeroesService.addExperience({hero})
             }
         }

@@ -18,7 +18,6 @@ module.exports = {
       Level: 1,
       TotalExperience: 0,
       ExperienceNeeded: 100,
-      GainedExperience: 0,
       IsDead: false
     })
 
@@ -32,13 +31,20 @@ module.exports = {
   },
 
   async addExperience (req, res) {
-    console.log(req.body.hero)
 
-    Heroe.findOneAndUpdate(
-      { Name: req.body.hero.Name },
-      {$set: {TotalExperience: req.body.hero.TotalExperience, GainedExperience: req.body.hero.GainedExperience, ExperienceNeeded: req.body.hero.ExperienceNeeded, Level: req.body.hero.Level}},
-      {new: true},
-      function (error, hero) {
+    var filter = { Name: req.body.hero.Name }
+    var query = {
+      $set: {
+              TotalExperience: req.body.hero.TotalExperience, 
+              GainedExperience: req.body.hero.GainedExperience, 
+              ExperienceNeeded: req.body.hero.ExperienceNeeded, 
+              Level: req.body.hero.Level
+             }
+      }
+    var options = {new: true}
+    
+
+    Heroe.findOneAndUpdate(filter, query, options, function (error, hero) {
         if (error) console.error(error)
         res.send({hero})
       })
