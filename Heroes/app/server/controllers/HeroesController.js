@@ -14,7 +14,7 @@ module.exports = {
     var newHero = new Heroe({
       Name: req.body.name,
       Owner: req.body.owner,
-      Class: 'Basic',
+      Class: req.body.class,
       Level: 1,
       TotalExperience: 0,
       ExperienceNeeded: 100,
@@ -31,22 +31,20 @@ module.exports = {
   },
 
   async addExperience (req, res) {
-
     var filter = { Name: req.body.hero.Name }
     var query = {
       $set: {
-              TotalExperience: req.body.hero.TotalExperience, 
-              GainedExperience: req.body.hero.GainedExperience, 
-              ExperienceNeeded: req.body.hero.ExperienceNeeded, 
-              Level: req.body.hero.Level
-             }
+        TotalExperience: req.body.hero.TotalExperience,
+        GainedExperience: req.body.hero.GainedExperience,
+        ExperienceNeeded: req.body.hero.ExperienceNeeded,
+        Level: req.body.hero.Level
       }
+    }
     var options = {new: true}
-    
 
     Heroe.findOneAndUpdate(filter, query, options, function (error, hero) {
-        if (error) console.error(error)
-        res.send({hero})
-      })
+      if (error) console.error(error)
+      res.send({hero})
+    })
   }
 }
