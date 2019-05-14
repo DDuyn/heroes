@@ -1,6 +1,7 @@
 <template>
   <div class="heroes row">
     <h1>Heroes</h1>
+    <button type="button" class="btn btn-outline-success btn-sm" @click="goCreateHero()">New Hero</button>
     <div class="col-md-12" v-for="hero in heroes" :key="hero._id">
       <div class="col-md-12">
         <h3>
@@ -61,6 +62,9 @@ export default {
       // TODO: No va aquí.
       hero = await Common.GainExperience(hero, 50)
       await HeroesService.addExperience({ hero })
+    },
+    goCreateHero () {
+      this.$router.push({ name: 'NewHero' })
     }
   }
 }

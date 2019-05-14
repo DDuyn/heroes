@@ -60,7 +60,7 @@ export default {
         owner: this.owner,
         class: this.classSelected
       })
-      this.$router.push({ name: 'Heroes' })
+      this.$router.go(-1)
     }
   }
 }
